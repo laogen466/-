@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: CH8a5H+tU3nAHCFFNMcE1P/RSKRpp1i5rwSZRz75vo9JFrdltCiwuNs=
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - playervis: {instanceID: 0}
+  - playeranim: {instanceID: 0}
+  - weapon1: {instanceID: 0}
+  - injureaudio: {fileID: 8300000, guid: a5c52601c6e81f141a19a23205b42aab, type: 3}
+  - shortattack: {fileID: 8300000, guid: 3cbb1e936aae23c41b5960503dbe044c, type: 3}
+  - longattack: {fileID: 8300000, guid: 279e194567e904d40a7a04b32516e4c0, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
