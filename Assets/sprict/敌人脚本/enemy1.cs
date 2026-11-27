@@ -30,6 +30,7 @@ public class enemy1 : enemybase
         
     }
     //攻击
+   
     void attack()
     {
         
@@ -49,11 +50,13 @@ public class enemy1 : enemybase
     //死亡
     public void Die()
     {
-        
+        EventManager.Instance.Trigger(GameEventType.EnemyDied, this.transform.position);
         enemypool.instance.ReleasEenemy(gameObject);
         Instantiate(goldprefab,transform.position,quaternion.identity);
         
     }
+
+    
 
     private void OnTriggerEnter2D(Collider2D other) 
     {

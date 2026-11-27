@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class wavecolltrol : MonoBehaviour
         enemy=Resources.Load<GameObject>("prefab/enemy");
         _maps=GameObject.Find("Map").GetComponent<SpriteRenderer>().bounds;
     }
+    
     void Update()
     {
         if (wavetime > 0)
