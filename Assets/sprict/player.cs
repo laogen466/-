@@ -86,7 +86,8 @@ public class player : MonoBehaviour
     {
         currhp-=damage;
         AudioSource.PlayClipAtPoint(injureaudio,transform.position,1f);
-        Gamepanel._instance.renewHp();
+        Vector2 healthData = new Vector2(currhp, maxhp);
+        EventManager.Instance.Trigger(GameEventType.PlayerHealthChanged,healthData);
         if (currhp <= 0)
         {
             currhp=0;
@@ -106,8 +107,9 @@ public class player : MonoBehaviour
             Destroy(collision.gameObject);
             Gold+=1;
             experience++;
-            Gamepanel._instance.renewgold();
-            Gamepanel._instance.renewExperience();
+            EventManager.Instance.Trigger(GameEventType.GoldChanged, Gold);
+            EventManager.Instance.Trigger(GameEventType.ExperienceChanged,experience);
+            
            
         }
     }

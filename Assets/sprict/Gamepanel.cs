@@ -41,39 +41,62 @@ public class Gamepanel : MonoBehaviour
     }
     void Start()
     {
-        renewExperience();
-        renewHp();
-        renewgold();
-        renewwave();
+       
+        
+        // 🌟 订阅金币变化事件
+        EventManager.Instance.Subscribe(GameEventType.GoldChanged, renewgold);
+        // 🌟 订阅血量变化事件
+        EventManager.Instance.Subscribe(GameEventType.PlayerHealthChanged, UpdateHpUI);
+        // 🌟 订阅经验条变化事件
+        EventManager.Instance.Subscribe(GameEventType.ExperienceChanged,renewExperience);
+        // 🌟 订阅波次变化事件
+        EventManager.Instance.Subscribe(GameEventType.WaveTimeChanged,renewwave);
+
+        renewgold(player._instanc.Gold);
+        UpdateHpUI(new Vector2(player._instanc.currhp, player._instanc.maxhp));
+        renewExperience(player._instanc.experience);
+        renewwave(GameManager._instance.currentwave);
     }
 
     //更新经验条
-    public void renewExperience()
+    public void renewExperience(object data)
     {
-        _experienceslider.value=player._instanc.experience%12/12;
-        _experiencetext.text="LV."+(int)player._instanc.experience/12;
+        float experience=(float)data;
+        _experienceslider.value=experience%12/12;
+        _experiencetext.text="LV."+(int)experience/12;
     }
     //更新生命值
-    public void renewHp()
+    private void UpdateHpUI(object data)
     {
-        _hpslider.value=player._instanc.currhp/player._instanc.maxhp;
-        _hptext.text=player._instanc.currhp+"/"+player._instanc.maxhp;
+        Vector2 health = (Vector2)data;
+        float currHp = health.x;
+        float maxHp = health.y;
+        
+        _hpslider.value = currHp / maxHp;
+        _hptext.text = currHp + "/" + maxHp;
     }
     //更新金币
-    public void renewgold()
+    public void renewgold(object data)
     {
         
-        _goldtext.text=player._instanc.Gold.ToString();
+        int gold = (int)data; // 因为传过来的是 object，需要强转回 int
+        _goldtext.text = gold.ToString();
     }
 
     public void renewcountdown(float time)
     {
         _wavetime.text=time.ToString("F0");
     }
-    //更新波次
-    void renewwave()
+    void OnDestroy()
     {
-        _wavetext.text="第"+GameManager._instance.currentwave.ToString()+"波";
+        EventManager.Instance.Unsubscribe(GameEventType.GoldChanged, renewgold);
+        EventManager.Instance.Unsubscribe(GameEventType.PlayerHealthChanged, UpdateHpUI);
+    }
+    //更新波次
+    void renewwave(object data)
+    {
+        int curr=(int)data;
+        _wavetext.text="第"+curr.ToString()+"波";
     }
     public void success()
     {
